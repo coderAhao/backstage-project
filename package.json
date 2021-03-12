@@ -8,12 +8,18 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "element-ui": "^2.15.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-service": "^4.5.0",
+    "axios": "^0.21.1",
+    "css-loader": "^5.1.2",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "style-loader": "^2.0.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
