@@ -56,6 +56,7 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 
+// 导入弹框Message组件 此组件与其他不同需挂载到Vue原型上以供全局使用
 // $message上有一系列方法可供使用
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
