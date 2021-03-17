@@ -44,7 +44,7 @@
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
             <!-- 操作按钮 tooltip文字提示 做了一点优化,增加了“hide-after”提示500毫秒后自动消失 -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false" :hide-after="500">
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -105,6 +105,27 @@
   </div>
 </el-dialog>
 
+<!-- 给用户分配权限的对话框 -->
+<el-dialog title="分配角色" :visible.sync="setRoleDialogVisible" width="50%" @close="setRoleDialogClosed">
+  <div>
+    <p>当前的用户: {{userInfo.username}}</p> 
+    <p>当前的角色: {{userInfo.role_name}}</p> 
+    <!-- 给用户分配角色的选择下拉列表 -->
+    <el-select v-model="selectRoleId" placeholder="请选择">
+      <el-option
+        v-for="item in rolesList"
+        :key="item.id"
+        :label="item.roleName"
+        :value="item.id">
+      </el-option>
+    </el-select>
+  </div>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+  </div>
+</el-dialog>
+
   </div>
 </template>
 
@@ -139,9 +160,10 @@ export default {
       },
       userList: [],
       total: 0,
-      // 控制添加用户对话框的显示与隐藏
+      // 控制添加、编辑、分配权限用户对话框的显示与隐藏
       addDialogVisible: false,
       editDialogVisible: false,
+      setRoleDialogVisible: false,
       // 添加用户表单数据
       addForm: {
         username: '',
@@ -189,7 +211,13 @@ export default {
             validator: checkMobile, trigger: 'blur'
           }
         ],
-      }
+      },
+      // 用来存储哪个点击的用户的名字
+      userInfo: '',
+      // 获取所有权限名
+      rolesList: [],
+      // 存储给用户分配好的权限角色
+      selectRoleId: [],
     }
   },
   created() {
@@ -294,6 +322,38 @@ export default {
       }
       this.$message.success('删除用户成功')
       this.getUserList();
+    },
+    // 给角色分配权限 弹出对话框
+    async setRole(userInfo) {
+      this.userInfo = userInfo;
+      // 获取所有角色的权限列表
+      const { data: res} = await this.$http.get('roles');
+      if (res.meta.status !== 200 ) {
+        return this.$message.error('获取权限列表失败')
+      }
+      this.rolesList = res.data;
+      this.setRoleDialogVisible = true;
+    },
+    // 点击确定按钮保存给用户分配的角色
+    async saveRoleInfo() {
+      if (!this.selectRoleId) {
+        return this.$message.error('请选择要分配的角色')
+      }
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, {
+        rid: this.selectRoleId
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('更新角色失败')
+      }
+      this.$message.success('更新角色成功')
+      this.getUserList();
+      this.setRoleDialogVisible = false;
+    },
+    // 分配成功后关闭对话框将选择下拉菜单清空方便下一次打开时选择框无东西
+    setRoleDialogClosed() {
+      this.selectRoleId = '';
+      this.userInfo = {};
+      // 其实也可将以上两行直接写在上一个方法即确定按钮中最后
     }
   }
 }

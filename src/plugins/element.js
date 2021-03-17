@@ -24,6 +24,10 @@ import {
   Pagination,
   Dialog,
   MessageBox,
+  Tag,
+  Tree,
+  Select,
+  Option,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // import { Form, FormItem } from 'element-ui'
@@ -55,6 +59,10 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Select)
+Vue.use(Option)
 
 // 导入弹框Message组件 此组件与其他不同需挂载到Vue原型上以供全局使用
 // $message上有一系列方法可供使用
