@@ -233,7 +233,6 @@ export default {
       }
       this.userList = res.data.users;
       this.total = res.data.total;
-      console.log(res);
     },
     // 监听每页显示几条
     handleSizeChange(newSize) {

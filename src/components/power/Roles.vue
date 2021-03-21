@@ -99,7 +99,6 @@ export default {
         return this.$message.error('获取角色列表失败');
       }
       this.rolesList = res.data;
-      console.log(this.rolesList);
     },
     async removeRightById(role, rightId) {
       const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {

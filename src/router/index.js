@@ -1,3 +1,6 @@
+  // https://oh.ahao.work/api/private/v1/'
+
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -8,6 +11,8 @@ const Welcome = () => import('../components/Welcome')
 const Users = () => import('../components/user/Users')
 const Rights = () => import('../components/power/Rights')
 const Roles = () => import('../components/power/Roles')
+
+const Cate = () => import('../components/goods/Cate')
 
 Vue.use(VueRouter)
 
@@ -28,6 +33,8 @@ const routes = [
       {path: '/users', component: Users},
       {path: '/rights', component: Rights},
       {path: '/roles', component: Roles},
+
+      {path: '/categories', component: Cate},
     ]
   },
 ]
@@ -46,7 +53,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // 如果用户访问的是登录页则直接放行
   if (to.path === '/login') return next()
-  // 从sessionStorage中获取保存的tooken值
+  // 从sessionStorage中获取保存的token值
   const tokenStr = window.sessionStorage.getItem('token');
   // 没有token,即token为空则强制跳转到登录页
   if (!tokenStr) return next('/login')
