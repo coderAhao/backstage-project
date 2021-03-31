@@ -32,6 +32,11 @@ import {
   Alert,
   Tabs,
   TabPane,
+  Steps,
+  Step,
+  CheckboxGroup,
+  Checkbox,
+  Upload,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // import { Form, FormItem } from 'element-ui'
@@ -71,6 +76,11 @@ Vue.use(Cascader)
 Vue.use(Alert)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Steps)
+Vue.use(Step)
+Vue.use(CheckboxGroup)
+Vue.use(Checkbox)
+Vue.use(Upload)
 
 // 导入弹框Message组件 此组件与其他不同需挂载到Vue原型上以供全局使用
 // $message上有一系列方法可供使用

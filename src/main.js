@@ -2,14 +2,20 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+// 导入全局样式表
 import './assets/css/global.css'
-
+// 导入element插件
 import './plugins/element.js'
 
 // 安装vue-table-with-tree-grid插件后引入并将其注册为全局组件
 // 在cate.vue文件中用此插件做家电的树状展开结构
 import TreeTable from 'vue-table-with-tree-grid'
 
+// 安装vue-quill-editor富文本编辑器后并导入且全局注册使用 也可局部注册
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 import axios from 'axios'
 // 配置请求的根路径
@@ -38,6 +44,21 @@ Vue.config.productionTip = false
 
 Vue.component('tree-table',TreeTable)
 
+Vue.use(VueQuillEditor)
+// 创建一个时间过滤器 全局注册,供List.vue文件使用
+Vue.filter('dateFormat', function(originVal) {
+  const dt = new Date(originVal * 1000);
+
+  const y = dt.getFullYear();
+  const m = (dt.getMonth() + 1 + '').padStart(2, '0');
+  const d = (dt.getDate() + '').padStart(2, '0');
+
+  const hh = (dt.getHours() + '').padStart(2, '0');
+  const mm = (dt.getMinutes() + '').padStart(2, '0');
+  const ss = (dt.getSeconds() + '').padStart(2, '0');
+
+  return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+})
 
 new Vue({
   router,
