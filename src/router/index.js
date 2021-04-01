@@ -19,6 +19,8 @@ const Add = () => import('../components/goods/Add')
 
 const Order = () => import('../components/order/Order')
 
+const Report = () => import('../components/report/Report')
+
 Vue.use(VueRouter)
 
 // const originalPush = VueRouter.prototype.push
@@ -45,6 +47,8 @@ const routes = [
       {path: '/goods/add', component: Add},
 
       {path: '/orders', component: Order},
+
+      {path: '/reports', component: Report},
     ]
   },
 ]
